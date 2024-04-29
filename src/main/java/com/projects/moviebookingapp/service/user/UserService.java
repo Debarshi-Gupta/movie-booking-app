@@ -2,14 +2,19 @@ package com.projects.moviebookingapp.service.user;
 
 import com.projects.moviebookingapp.model.dto.UserDto;
 import com.projects.moviebookingapp.model.entity.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.List;
 
 public interface UserService {
 
-    User save(UserDto user);
+    UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
 
-    List<User> findAll();
+    UserDto save(UserDto userDto);
 
-    User findOne(String username);
+    List<UserDto> findAll();
+
+    UserDto findOne(String username);
 }

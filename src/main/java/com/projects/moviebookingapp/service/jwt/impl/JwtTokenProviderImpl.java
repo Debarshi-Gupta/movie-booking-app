@@ -1,5 +1,6 @@
 package com.projects.moviebookingapp.service.jwt.impl;
 
+import com.projects.moviebookingapp.service.jwt.JwtTokenProvider;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -8,6 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -16,8 +18,8 @@ import java.util.Date;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-@Component
-public class JwtTokenProviderImpl implements Serializable {
+@Service
+public class JwtTokenProviderImpl implements Serializable, JwtTokenProvider {
 
     @Value("${jwt.token.validity}")
     public long TOKEN_VALIDITY;
@@ -28,31 +30,37 @@ public class JwtTokenProviderImpl implements Serializable {
     @Value("${jwt.authorities.key}")
     public String AUTHORITIES_KEY;
 
+    @Override
     public String getUsernameFromToken(String token) {
         return getClaimFromToken(token, Claims::getSubject);
     }
 
+    @Override
     public Date getExpirationDateFromToken(String token) {
         return getClaimFromToken(token, Claims::getExpiration);
     }
 
+    @Override
     public <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = getAllClaimsFromToken(token);
         return claimsResolver.apply(claims);
     }
 
-    private Claims getAllClaimsFromToken(String token) {
+    @Override
+    public Claims getAllClaimsFromToken(String token) {
         return Jwts.parser()
                 .setSigningKey(SIGNING_KEY)
                 .parseClaimsJws(token)
                 .getBody();
     }
 
-    private Boolean isTokenExpired(String token) {
+    @Override
+    public Boolean isTokenExpired(String token) {
         final Date expiration = getExpirationDateFromToken(token);
         return expiration.before(new Date());
     }
 
+    @Override
     public String generateToken(Authentication authentication) {
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
@@ -67,12 +75,14 @@ public class JwtTokenProviderImpl implements Serializable {
                 .compact();
     }
 
+    @Override
     public Boolean validateToken(String token, UserDetails userDetails) {
         final String username = getUsernameFromToken(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
-    UsernamePasswordAuthenticationToken getAuthenticationToken(final String token, final Authentication existingAuth, final UserDetails userDetails) {
+    @Override
+    public UsernamePasswordAuthenticationToken getAuthenticationToken(final String token, final Authentication existingAuth, final UserDetails userDetails) {
 
         final JwtParser jwtParser = Jwts.parser().setSigningKey(SIGNING_KEY);
 
