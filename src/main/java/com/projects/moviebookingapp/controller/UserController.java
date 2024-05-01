@@ -54,11 +54,4 @@ public class UserController {
         return new ResponseEntity<>(savedUserDto, HttpStatus.OK);
     }
 
-    @GetMapping("/xyz")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<String> xyz()
-    {
-        return new ResponseEntity<>("Hehe", HttpStatus.OK);
-    }
-
 }
