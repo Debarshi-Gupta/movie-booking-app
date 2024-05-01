@@ -16,6 +16,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/users")
 @CrossOrigin
@@ -31,7 +33,7 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/login")
-    public ResponseEntity<AuthorizationResponse> generateJwtToken(@RequestBody LoginUser loginUser)
+    public ResponseEntity<AuthorizationResponse> generateJwtToken(@RequestBody @Valid LoginUser loginUser)
     {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -46,9 +48,17 @@ public class UserController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<UserDto> saveUser(@RequestBody UserDto userDto)
+    public ResponseEntity<UserDto> saveUser(@RequestBody @Valid UserDto userDto)
     {
-        return new ResponseEntity<>(userService.save(userDto), HttpStatus.OK);
+        UserDto savedUserDto = userService.save(userDto);
+        return new ResponseEntity<>(savedUserDto, HttpStatus.OK);
+    }
+
+    @GetMapping("/xyz")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<String> xyz()
+    {
+        return new ResponseEntity<>("Hehe", HttpStatus.OK);
     }
 
 }
