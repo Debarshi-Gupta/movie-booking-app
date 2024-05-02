@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/v1.0/users")
 @CrossOrigin
 public class UserController {
 
@@ -47,7 +47,7 @@ public class UserController {
                 HttpStatus.OK);
     }
 
-    @PostMapping("/save")
+    @PostMapping("/register")
     public ResponseEntity<UserDto> saveUser(@RequestBody @Valid UserDto userDto)
     {
         UserDto savedUserDto = userService.save(userDto);
