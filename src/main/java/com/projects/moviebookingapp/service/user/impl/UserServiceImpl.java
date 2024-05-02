@@ -146,4 +146,10 @@ public class UserServiceImpl implements UserService, UserDetailsService{
 
         return CustomUserMapper.mapToUserDto(user);
     }
+
+    @Override
+    public User findById(Long id)
+    {
+        return userRepository.findById(id).orElse(null);
+    }
 }
