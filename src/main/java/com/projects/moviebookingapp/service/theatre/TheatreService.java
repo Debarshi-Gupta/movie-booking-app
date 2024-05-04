@@ -11,9 +11,9 @@ public interface TheatreService {
 
     Theatre updateTheatre(Theatre updatedTheatre);
 
-    void deleteTheatre(Long hallId);
+    String deleteTheatre(Long theatreId);
 
     List<Theatre> getAllTheatres();
 
-    Theatre getTheatreById(Long hallId) throws CustomTheatreException;
+    Theatre getTheatreById(Long theatreId);
 }

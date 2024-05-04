@@ -37,8 +37,8 @@ public class TheatreController {
     @DeleteMapping("/{theatreId}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> deleteCinemaHall(@PathVariable Long theatreId) {
-        theatreService.deleteTheatre(theatreId);
-        return new ResponseEntity<>("Cinema Hall deleted successfully.", HttpStatus.OK);
+        String response = theatreService.deleteTheatre(theatreId);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("")
@@ -50,7 +50,7 @@ public class TheatreController {
 
     @GetMapping("/{theatreId}")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<Theatre> getCinemaHallById(@PathVariable Long theatreId) throws CustomTheatreException {
+    public ResponseEntity<Theatre> getCinemaHallById(@PathVariable Long theatreId) {
         Theatre theatre = theatreService.getTheatreById(theatreId);
         return ResponseEntity.ok(theatre);
     }
