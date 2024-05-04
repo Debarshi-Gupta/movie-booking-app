@@ -5,6 +5,8 @@ import com.projects.moviebookingapp.model.dto.LoginUser;
 import com.projects.moviebookingapp.model.dto.UserDto;
 import com.projects.moviebookingapp.service.jwt.JwtTokenProvider;
 import com.projects.moviebookingapp.service.user.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,6 +34,8 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Operation(summary = "Generates a JWT Token for a User", description = "This REST API allows a User to login and generates a JWT Token")
+    @ApiResponse(responseCode = "200", description = "Http Status Code OK")
     @PostMapping("/login")
     public ResponseEntity<AuthorizationResponse> generateJwtToken(@RequestBody @Valid LoginUser loginUser)
     {
@@ -47,6 +51,8 @@ public class UserController {
                 HttpStatus.OK);
     }
 
+    @Operation(summary = "Creates a New User", description = "This REST API allows a User to register in our application")
+    @ApiResponse(responseCode = "200", description = "Http Status Code OK")
     @PostMapping("/register")
     public ResponseEntity<UserDto> saveUser(@RequestBody @Valid UserDto userDto)
     {
