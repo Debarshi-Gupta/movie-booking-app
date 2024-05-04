@@ -5,6 +5,7 @@ import com.projects.moviebookingapp.model.dto.MovieDto;
 import com.projects.moviebookingapp.model.entity.Movie;
 import com.projects.moviebookingapp.service.movie.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -45,8 +46,9 @@ public class MovieController {
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public void deleteMovie(@PathVariable Long id) {
-        movieService.deleteMovie(id);
+    public ResponseEntity<String> deleteMovie(@PathVariable Long id) {
+        String response = movieService.deleteMovie(id);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 }

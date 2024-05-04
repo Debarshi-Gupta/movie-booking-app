@@ -10,11 +10,11 @@ public interface MovieService {
 
     List<Movie> getAllMovies();
 
-    Movie getMovieById(Long id) throws CustomMovieException;
+    Movie getMovieById(Long id);
 
     Movie createMovie(MovieDto movieDto);
 
     Movie updateMovie(Movie movie);
 
-    void deleteMovie(Long movieId);
+    String deleteMovie(Long movieId);
 }
