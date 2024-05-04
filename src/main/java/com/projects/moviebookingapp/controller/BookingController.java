@@ -22,17 +22,17 @@ public class BookingController {
     private BookingService bookingService;
 
     @GetMapping("/details/{bookingId}")
-    public ResponseEntity<Booking> getBookingDetails(@PathVariable long bookingId) throws CustomBookingException {
+    public ResponseEntity<Booking> getBookingDetails(@PathVariable long bookingId) {
         return ResponseEntity.ok(bookingService.getBookingDetails(bookingId));
     }
 
     @GetMapping("/event/{eventId}")
-    public ResponseEntity<List<Booking>> getAllBookings(@PathVariable long eventId) throws CustomEventException {
+    public ResponseEntity<List<Booking>> getAllBookings(@PathVariable long eventId) {
         return ResponseEntity.ok(bookingService.getAllBookings(eventId));
     }
 
     @DeleteMapping("/cancel/{bookingId}")
-    public ResponseEntity<Booking> cancelBooking(@PathVariable long bookingId) throws CustomBookingException, CustomEventException {
+    public ResponseEntity<Booking> cancelBooking(@PathVariable long bookingId) {
         return ResponseEntity.ok(bookingService.cancelBooking(bookingId));
     }
 
@@ -42,13 +42,13 @@ public class BookingController {
     }
 
     @PostMapping("/book")
-    public ResponseEntity<Booking> bookTicket(@RequestBody BookingDto bookingDto) throws CustomUserException, CustomEventException, NotEnoughTicketsException {
+    public ResponseEntity<Booking> bookTicket(@RequestBody BookingDto bookingDto) {
         return ResponseEntity.ok(bookingService.bookTicket(bookingDto));
 
     }
 
     @GetMapping("/history/{customerId}")
-    public ResponseEntity<List<Booking>> getBookingHistory(@PathVariable long customerId) throws CustomBookingException, CustomUserException {
+    public ResponseEntity<List<Booking>> getBookingHistory(@PathVariable long customerId) {
         return ResponseEntity.ok(bookingService.getBookingHistory(customerId));
     }
 

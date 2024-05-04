@@ -8,6 +8,7 @@ import com.projects.moviebookingapp.model.dto.EventDto;
 import com.projects.moviebookingapp.model.entity.Event;
 import com.projects.moviebookingapp.service.event.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +25,7 @@ public class EventController {
 
     @PostMapping("")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Event> addEvent(@RequestBody EventDto eventDto) throws CustomTheatreException, CustomMovieException, InvalidTimeSelectionException {
+    public ResponseEntity<Event> addEvent(@RequestBody EventDto eventDto) {
         Event newEvent = eventService.addEvent(eventDto);
         return ResponseEntity.ok(newEvent);
 
@@ -46,7 +47,7 @@ public class EventController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<Event> getEventById(@PathVariable long id) throws CustomEventException {
+    public ResponseEntity<Event> getEventById(@PathVariable long id) {
         Event event = eventService.getEventById(id);
         return ResponseEntity.ok(event);
     }
@@ -54,7 +55,7 @@ public class EventController {
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> deleteEvent(@PathVariable long id) {
-        eventService.deleteEventById((int) id);
-        return ResponseEntity.ok("Event deleted successfully.");
+        String response = eventService.deleteEventById(id);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

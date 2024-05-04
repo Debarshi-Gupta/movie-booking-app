@@ -11,15 +11,15 @@ import java.util.List;
 
 public interface BookingService {
 
-    Booking getBookingDetails(long id) throws CustomBookingException;
+    Booking getBookingDetails(long id);
 
-    List<Booking> getBookingHistory(long userId) throws CustomBookingException, CustomUserException;
+    List<Booking> getBookingHistory(long userId);
 
-    Booking cancelBooking(long id) throws CustomBookingException, CustomEventException;
+    Booking cancelBooking(long id);
 
-    Booking bookTicket(BookingDto bookingDto) throws NotEnoughTicketsException, CustomUserException, CustomEventException;
+    Booking bookTicket(BookingDto bookingDto);
 
     Booking updateBooking(Booking booking);
 
-    List<Booking> getAllBookings(long eventId) throws CustomEventException;
+    List<Booking> getAllBookings(long eventId);
 }

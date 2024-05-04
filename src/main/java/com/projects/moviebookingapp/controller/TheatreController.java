@@ -50,7 +50,7 @@ public class TheatreController {
 
     @GetMapping("/{theatreId}")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<Theatre> getCinemaHallById(@PathVariable Long theatreId) throws CustomTheatreException {
+    public ResponseEntity<Theatre> getCinemaHallById(@PathVariable Long theatreId) {
         Theatre theatre = theatreService.getTheatreById(theatreId);
         return ResponseEntity.ok(theatre);
     }

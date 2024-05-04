@@ -28,7 +28,7 @@ public class MovieController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<Movie> getMovieById(@PathVariable Long id) throws CustomMovieException {
+    public ResponseEntity<Movie> getMovieById(@PathVariable Long id) {
         return ResponseEntity.ok(movieService.getMovieById(id));
     }
 

@@ -13,11 +13,11 @@ public interface EventService {
 
     List<Event> getAllEvents();
 
-    Event getEventById(long eventId) throws CustomEventException;
+    Event getEventById(long eventId);
 
-    Event addEvent(EventDto eventDto) throws CustomMovieException, CustomTheatreException, InvalidTimeSelectionException;
+    Event addEvent(EventDto eventDto);
 
     Event updateEvent(Event event);
 
-    void deleteEventById(long eventId);
+    String deleteEventById(long eventId);
 }
